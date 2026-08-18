@@ -1,0 +1,39 @@
+# Canonical DDIS surrogate training: official FNO_pad (sigma_t1, sigma_t2) -> full-field u.
+# Benchmark area averaging is applied later during posterior conditioning.
+outdir: "exps"
+data: "hf_reference_materialized/PDEFieldDataset_hf/LTMI_Multimode"
+input_channels: ["sigma_t1", "sigma_t2"]
+output_channels: ["u"]
+normalization_scale: 1.0
+resolution: 64
+validation_size: 5000
+model: "fno_pad"
+model_config:
+  n_modes: [64, 64]
+  hidden_channels: 64
+  n_layers: 4
+epochs: 500
+batch: 40
+lr: 1.0e-4
+beta1: 0.9
+beta2: 0.999
+eps: 1.0e-8
+scheduler: "none"
+step_size: 50
+step_gamma: 0.1
+min_lr: 1.0e-6
+validation_frequency: 10
+save_frequency: 100
+early_stopping: false
+patience: 500
+min_delta: 1.0e-6
+fp16: false
+tf32: false
+workers: 4
+seed: 20260623
+device: "cuda"
+resume: null
+dry_run: false
+wandb: "online"
+name: "__required__"
+

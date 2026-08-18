@@ -1,0 +1,32 @@
+# Runtime outputs
+/artifacts/
+/exps/
+/outputs/
+/outputs_canonical/
+/logs/
+/wandb/
+/ablation/
+/docs/
+/artifacts-manifest.sha256
+
+# Local execution and validation helpers
+/scripts/
+/tests/
+CLAUDE.md
+
+# Python/tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Model/data files must remain outside Git
+*.h5
+*.pkl
+*.pt
+
+# Local environments and editor files
+.env
+.venv/
+.venv-fundiff-jax/
+.vscode/
+.idea/

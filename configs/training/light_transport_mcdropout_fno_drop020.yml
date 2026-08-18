@@ -1,0 +1,50 @@
+# Direct MC-dropout FNO inverse baseline for Light Transport.
+outdir: "exps"
+data: "hf_reference_materialized/PDEFieldDataset_hf/LTMI_Multimode"
+target_channels: ["sigma_t1", "sigma_t2"]
+observed_channel: "u"
+observation_mode: "area_average"
+observation_resolution: [16, 16]
+normalization_scale: 1.0
+resolution: 64
+validation_size: 5000
+validation_eval_size: 256
+validation_mc_samples: 8
+validation_every_images: 250000
+validation_seed: 20260725
+max_images: 15000000
+snapshot_images: [5000000, 10000000, 15000000]
+model: "fno"
+model_config:
+  n_modes: [32, 32]
+  hidden_channels: 128
+  n_layers: 6
+  lifting_channel_ratio: 2
+  projection_channel_ratio: 1
+  channel_mlp_dropout: 0.2
+  domain_padding: 0.1
+  domain_padding_mode: "one-sided"
+batch: 64
+lr: 5.0e-4
+weight_decay: 2.0e-2
+beta1: 0.9
+beta2: 0.999
+scheduler: "onecycle"
+warmup_fraction: 0.1
+div_factor: 25
+final_div_factor: 10000.0
+min_lr: 1.0e-6
+min_delta: 1.0e-6
+log_every_images: 50000
+fp16: false
+tf32: false
+workers: 4
+seed: 20260724
+sensor_seed: 20260724
+device: "cuda"
+resume: null
+dry_run: false
+wandb: "online"
+wandb_project: "PosteriorBench-MCDropout"
+postprocess: {}
+name: "__required__"

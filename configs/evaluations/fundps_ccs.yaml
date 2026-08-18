@@ -1,0 +1,31 @@
+method: fundps
+dataset: ccs
+
+model:
+  channels: [x, y]
+  resolution: [64, 200]
+
+normalization:
+  channels: [x, y]
+  mean: [248.86085613126085, 0.08489088577079608]
+  std: [212.11948744691105, 0.21714609039354066]
+  scale: 0.5
+
+sampling:
+  init_latents: rbf
+  rbf_scale: 0.05
+  iterations: 500
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+
+guidance:
+  pending: false
+  loss_type: mse
+  normalize: true
+  field_weights:
+    x: 0.0
+    y: 300.0
+  pde_weight: 0.0
+
+postprocess: {}

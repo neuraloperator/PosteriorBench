@@ -1,0 +1,38 @@
+# CCS Fun-DDPS surrogate training: x -> y.
+outdir: "exps"
+data: "hf_reference_materialized/PDEFieldDataset_hf/CCS_Multimode"
+input_channels: ["x"]
+output_channels: ["y"]
+normalization_scale: 1.0
+resolution: [64, 200]
+validation_size: 2000
+model: "fno"
+model_config:
+  n_modes: [16, 32]
+  hidden_channels: 48
+  projection_channel_ratio: 1
+  n_layers: 4
+  domain_padding: 0.1
+  domain_padding_mode: "one-sided"
+epochs: 100
+batch: 32
+lr: 1.0e-3
+weight_decay: 2.0e-2
+scheduler: "onecycle"
+warmup_fraction: 0.1
+div_factor: 25
+final_div_factor: 10000.0
+min_lr: 1.0e-6
+validation_frequency: 5
+save_frequency: 20
+patience: 15
+min_delta: 1.0e-6
+fp16: false
+tf32: false
+workers: 4
+seed: 20260623
+device: "cuda"
+resume: null
+dry_run: false
+wandb: "online"
+name: "__required__"

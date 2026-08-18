@@ -1,0 +1,41 @@
+# Canonical DDIS prior training: target-only Light Transport coefficient prior.
+outdir: "exps"
+data: "hf_reference_materialized/PDEFieldDataset_hf/LTMI_Multimode"
+target_channels: ["sigma_t1", "sigma_t2"]
+normalization_scale: 0.5
+resolution: 64
+nn_resolution: null
+cond: false
+arch: "ddpmpp-uno"
+precond: "edm"
+duration: 15
+batch: 32
+batch_gpu: null
+cbase: 64
+cres: [1, 2, 4, 4]
+lr: 1.0e-4
+lr_rampup: 5
+ema: 0.5
+dropout: 0.13
+augment: 0.12
+xflip: false
+attn_resolutions: [16]
+num_blocks: 4
+fmult: 0.5
+rank: 0.1
+rbf_scale: 0.05
+fp16: false
+tf32: false
+ls: 1
+bench: true
+cache: false
+workers: 4
+tick: 10
+snap: 50
+dump: 250
+seed: null
+resume: null
+dry_run: false
+wandb: "online"
+name: "__required__"
+

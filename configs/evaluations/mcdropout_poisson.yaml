@@ -1,0 +1,22 @@
+method: mcdropout
+dataset: poisson
+model:
+  channels: [f]
+  resolution: 128
+normalization:
+  channels: [f]
+  mean: [-5.112124255024497e-12]
+  std: [0.2719037491997419]
+  scale: 1.0
+sampling:
+  dropout_active: true
+guidance:
+  observed_field: phi
+  observation_operator: sparse_points
+  condition_channels: [observed_value, mask]
+  condition_normalization:
+    channels: [phi]
+    mean: [6.660705921767242e-06]
+    std: [0.003855847254279942]
+    scale: 1.0
+postprocess: {}

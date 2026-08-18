@@ -1,0 +1,19 @@
+method: eci
+dataset: ccs
+model:
+  channels: [x, y]
+  resolution: [64, 200]
+normalization:
+  channels: [x, y]
+  mean: [248.86085613126085, 0.08489088577079608]
+  std: [212.11948744691105, 0.21714609039354066]
+  scale: 0.5
+sampling:
+  n_step: 200
+  n_mix: 1
+  resample_step: 5
+guidance:
+  pending: false
+  observed_field: y
+  observation_operator: sparse_points
+postprocess: {}

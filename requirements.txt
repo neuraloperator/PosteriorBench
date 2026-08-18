@@ -1,0 +1,28 @@
+# Canonical RunPod RTX PRO 4500 Blackwell environment.
+#
+# Python 3.11 is required. The CUDA 12.8 wheels support Blackwell; verify the
+# RunPod host driver with `nvidia-smi` before installation.
+--extra-index-url https://download.pytorch.org/whl/cu128
+
+torch==2.7.1+cu128
+torchvision==0.22.1+cu128
+triton==3.3.1
+
+h5py==3.16.0
+huggingface_hub==1.26.0
+datasets==5.0.1
+matplotlib==3.10.8
+gpytorch==1.13
+# DDIS/Fun-DDPS FNO surrogate inference on B300 requires this spectral fix fork.
+# PyPI neuraloperator==2.0.0 still gives an O(1e-2) GPU-only forward error.
+neuraloperator @ git+https://github.com/i207M/neuraloperator.git@15f3cfea28f3767f98ab8b5b50de61079e62530d
+numpy==2.2.6
+pyarrow==25.0.0
+PyYAML==6.0.3
+requests==2.33.1
+scipy==1.17.1
+tqdm==4.67.3
+wandb==0.25.1
+
+# Test utilities.
+pytest==9.1.0

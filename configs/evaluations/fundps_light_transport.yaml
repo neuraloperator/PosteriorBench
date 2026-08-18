@@ -1,0 +1,32 @@
+method: fundps
+dataset: light_transport
+
+model:
+  channels: [sigma_t1, sigma_t2, u]
+  resolution: 64
+
+normalization:
+  channels: [sigma_t1, sigma_t2, u]
+  mean: [2.5167187795048154, 2.517986240638265, 0.3229744808981993]
+  std: [1.756092760094968, 1.7550055063328003, 0.13083477812502864]
+  scale: 0.5
+
+sampling:
+  init_latents: rbf
+  rbf_scale: 0.05
+  iterations: 500
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+
+guidance:
+  pending: false
+  loss_type: mse
+  normalize: true
+  field_weights:
+    sigma_t1: 0.0
+    sigma_t2: 0.0
+    u: 3000.0
+  pde_weight: 0.0
+
+postprocess: {}

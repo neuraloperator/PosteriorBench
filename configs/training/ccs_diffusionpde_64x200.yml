@@ -1,0 +1,34 @@
+# CCS DiffusionPDE single-stage prior training at the native 64x200 grid.
+outdir: "exps"
+data: "hf_reference_materialized/PDEFieldDataset_hf/CCS_Multimode"
+resolution: [64, 200]
+nn_resolution: [64, 200]
+normalization_scale: 0.5
+cond: false
+arch: "ddpmpp"
+precond: "edm"
+duration: 15
+batch: 32
+batch_gpu: null
+cbase: 128
+cres: [2, 2, 2]
+lr: 1.0e-3
+lr_rampup: 10
+ema: 0.05
+dropout: 0.13
+augment: 0.12
+xflip: false
+fp16: false
+tf32: false
+ls: 1
+bench: true
+cache: false
+workers: 4
+tick: 10
+snap: 50
+dump: 100
+seed: null
+resume: null
+dry_run: false
+wandb: "online"
+name: "__required__"

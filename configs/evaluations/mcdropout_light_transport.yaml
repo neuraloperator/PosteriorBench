@@ -1,0 +1,22 @@
+method: mcdropout
+dataset: light_transport
+model:
+  channels: [sigma_t1, sigma_t2]
+  resolution: 64
+normalization:
+  channels: [sigma_t1, sigma_t2]
+  mean: [2.5167187795048154, 2.517986240638265]
+  std: [1.756092760094968, 1.7550055063328003]
+  scale: 1.0
+sampling:
+  dropout_active: true
+guidance:
+  observed_field: u
+  observation_operator: area_average
+  condition_channels: [observed_value, mask]
+  condition_normalization:
+    channels: [u]
+    mean: [0.3229744808981993]
+    std: [0.13083477812502864]
+    scale: 1.0
+postprocess: {}

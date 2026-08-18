@@ -1,0 +1,20 @@
+method: eci
+dataset: poisson
+model:
+  channels: [f, phi]
+  resolution: 128
+normalization:
+  channels: [f, phi]
+  mean: [-5.112124255024497e-12, 6.660705921767242e-06]
+  std: [0.2719037491997419, 0.003855847254279942]
+  scale: 0.5
+sampling:
+  n_step: 200
+  n_mix: 1
+  resample_step: 1
+guidance:
+  pending: false
+  constraint: hard_observation
+  observed_field: phi
+  observation_operator: sparse_points
+postprocess: {}

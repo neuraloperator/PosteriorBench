@@ -1,0 +1,46 @@
+method: ddis
+dataset: light_transport
+model:
+  channels: [sigma_t1, sigma_t2]
+  resolution: 64
+normalization:
+  channels: [sigma_t1, sigma_t2]
+  mean: [2.5167187795048154, 2.517986240638265]
+  std: [1.756092760094968, 1.7550055063328003]
+  scale: 0.5
+sampling:
+  init_latents: rbf
+  rbf_scale: 0.05
+  annealing:
+    num_steps: 100
+    sigma_max: 10.0
+    sigma_min: 0.01
+    sigma_final: 0.0
+    rho: 7.0
+  diffusion:
+    num_steps: 5
+    sigma_min: 0.001
+    sigma_final: 0.0
+    rho: 7.0
+  langevin:
+    num_steps: 20
+    lr: 1.0e-4
+    lr_min_ratio: 0.01
+    lr_rho: 1.0
+    eta: 0.1
+    tau: 0.001
+guidance:
+  pending: false
+  observed_field: u
+  observation_operator: area_average
+  loss_type: mse
+  normalize: true
+  observation_normalization_scale: 1.0
+  field_weights:
+    u: 3.0
+  surrogate:
+    model: fno_pad
+    checkpoint: artifacts/checkpoints/ddis_surrogate/light_transport_ddis_surrogate.pt
+    input_channels: [sigma_t1, sigma_t2]
+    output_channels: [u]
+postprocess: {}

@@ -1,0 +1,22 @@
+method: eci
+dataset: darcy
+model:
+  channels: [a, u]
+  resolution: 128
+normalization:
+  channels: [a, u]
+  mean: [7.504105799560547, 0.005674326580818473]
+  std: [4.4999981269340505, 0.003775836434409684]
+  scale: 0.5
+sampling:
+  n_step: 200
+  n_mix: 5
+  resample_step: 1
+guidance:
+  pending: false
+  constraint: hard_observation
+  observed_field: u
+  observation_operator: sparse_points
+postprocess:
+  discrete_values:
+    a: [3.0, 12.0]

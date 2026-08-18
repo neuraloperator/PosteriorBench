@@ -1,0 +1,42 @@
+# Candidate shared Fun-DDPS/DDIS target prior stage 2.
+# Continue from the 10M stage-1 state to 15M images. The data/noise grid is
+# 128, while the SongUNO network remains at 64 resolution to match FunDPS scale.
+outdir: "exps"
+data: "hf_reference_materialized/PDEFieldDataset_hf/Poisson_Multimode"
+target_channels: ["f"]
+normalization_scale: 0.5
+resolution: 128
+nn_resolution: 64
+cond: false
+arch: "ddpmpp-uno"
+precond: "edm"
+duration: 15
+batch: 32
+batch_gpu: null
+cbase: 64
+cres: [1, 2, 4, 4]
+lr: 1.0e-4
+lr_rampup: 5
+ema: 0.5
+dropout: 0.13
+augment: 0.12
+xflip: false
+attn_resolutions: [16]
+num_blocks: 4
+fmult: 0.5
+rank: 0.1
+rbf_scale: 0.05
+fp16: false
+tf32: false
+ls: 1
+bench: true
+cache: false
+workers: 4
+tick: 10
+snap: 50
+dump: 250
+seed: null
+resume: null
+dry_run: false
+wandb: "online"
+name: "__required__"
