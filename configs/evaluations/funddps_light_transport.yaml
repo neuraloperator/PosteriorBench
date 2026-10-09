@@ -1,0 +1,31 @@
+method: funddps
+dataset: light_transport
+model:
+  channels: [sigma_t1, sigma_t2]
+  resolution: 64
+normalization:
+  channels: [sigma_t1, sigma_t2]
+  mean: [2.5167187795048154, 2.517986240638265]
+  std: [1.756092760094968, 1.7550055063328003]
+  scale: 0.5
+sampling:
+  iterations: 500
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+  init_latents: rbf
+  rbf_scale: 0.05
+guidance:
+  pending: false
+  observed_field: u
+  observation_operator: area_average
+  loss_type: mse
+  normalize: true
+  field_weights:
+    u: 400.0
+  surrogate:
+    model: fno
+    checkpoint: artifacts/checkpoints/funddps_surrogate/light_transport_funddps_surrogate.pt
+    input_channels: [sigma_t1, sigma_t2]
+    output_channels: [u]
+postprocess: {}

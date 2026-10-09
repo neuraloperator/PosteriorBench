@@ -1,0 +1,48 @@
+method: ddis
+dataset: darcy
+model:
+  channels: [a]
+  resolution: 128
+normalization:
+  channels: [a]
+  mean: [7.504105799560547]
+  std: [4.4999981269340505]
+  scale: 0.5
+sampling:
+  init_latents: rbf
+  rbf_scale: 0.05
+  annealing:
+    num_steps: 200
+    sigma_max: 10.0
+    sigma_min: 0.01
+    sigma_final: 0.0
+    rho: 7.0
+  diffusion:
+    num_steps: 5
+    sigma_min: 0.001
+    sigma_final: 0.0
+    rho: 7.0
+  langevin:
+    num_steps: 10
+    lr: 1.0e-4
+    lr_min_ratio: 0.01
+    lr_rho: 1.0
+    eta: 0.1
+    tau: 0.001
+guidance:
+  pending: false
+  observed_field: u
+  observation_operator: sparse_points
+  loss_type: mse
+  normalize: true
+  observation_normalization_scale: 1.0
+  field_weights:
+    u: 10.0
+  surrogate:
+    model: fno_pad
+    checkpoint: artifacts/checkpoints/ddis_surrogate/darcy_ddis_surrogate.pt
+    input_channels: [a]
+    output_channels: [u]
+postprocess:
+  discrete_values:
+    a: [3.0, 12.0]

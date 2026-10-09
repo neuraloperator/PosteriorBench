@@ -1,0 +1,22 @@
+method: esmda
+dataset: ccs
+model:
+  channels: [x, y]
+  resolution: [64, 200]
+normalization:
+  channels: [x, y]
+  mean: [248.86085613126085, 0.08489088577079608]
+  std: [212.11948744691105, 0.21714609039354066]
+  scale: 0.5
+sampling:
+  ensemble_size: 256
+  inflation_factors: [4.0, 4.0, 4.0, 4.0]
+guidance:
+  observed_field: y
+  observation_operator: sparse_points
+  observation_error:
+    mode: prior_std_fraction
+    scale: 2.0
+    min_std: 1.0e-6
+    jitter: 1.0e-8
+postprocess: {}

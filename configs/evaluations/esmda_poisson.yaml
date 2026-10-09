@@ -1,0 +1,23 @@
+method: esmda
+dataset: poisson
+model:
+  channels: [f, phi]
+  resolution: 128
+normalization:
+  channels: [f, phi]
+  mean: [-5.112124255024497e-12, 6.660705921767242e-06]
+  std: [0.2719037491997419, 0.003855847254279942]
+  scale: 0.5
+sampling:
+  ensemble_size: 512
+  num_assimilations: 1
+  inflation: constant
+guidance:
+  observed_field: phi
+  observation_operator: sparse_points
+  observation_error:
+    mode: prior_std_fraction
+    scale: 100.0
+    min_std: 1.0e-6
+    jitter: 1.0e-8
+postprocess: {}

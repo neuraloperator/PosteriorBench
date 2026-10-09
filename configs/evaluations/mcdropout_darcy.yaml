@@ -1,0 +1,24 @@
+method: mcdropout
+dataset: darcy
+model:
+  channels: [a]
+  resolution: 128
+normalization:
+  channels: [a]
+  mean: [7.504105799560547]
+  std: [4.4999981269340505]
+  scale: 1.0
+sampling:
+  dropout_active: true
+guidance:
+  observed_field: u
+  observation_operator: sparse_points
+  condition_channels: [observed_value, mask]
+  condition_normalization:
+    channels: [u]
+    mean: [0.005674326580818473]
+    std: [0.003775836434409684]
+    scale: 1.0
+postprocess:
+  discrete_values:
+    a: [3.0, 12.0]

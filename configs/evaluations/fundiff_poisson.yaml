@@ -1,0 +1,26 @@
+method: fundiff
+dataset: poisson
+model:
+  channels: [f]
+  resolution: 128
+normalization:
+  channels: [f]
+  mean: [-5.112124255024497e-12]
+  std: [0.2719037491997419]
+  scale: 0.5
+sampling:
+  num_steps: 20
+  decode_chunk: 1024
+guidance:
+  pending: false
+  type: conditional_rectified_flow
+  observed_field: phi
+  observation_operator: sparse_points
+  condition_representation: sparse_masked_grid
+  num_sensors: 128
+  condition_normalization:
+    channels: [phi]
+    mean: [6.660705921767242e-06]
+    std: [0.003855847254279942]
+    scale: 0.5
+postprocess: {}

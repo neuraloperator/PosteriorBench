@@ -1,0 +1,32 @@
+method: diffusionpde
+dataset: ccs
+
+model:
+  channels: [x, y]
+  resolution: [64, 200]
+
+normalization:
+  channels: [x, y]
+  mean: [248.86085613126085, 0.08489088577079608]
+  std: [212.11948744691105, 0.21714609039354066]
+  scale: 0.5
+
+sampling:
+  init_latents: gaussian
+  iterations: 2000
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+
+guidance:
+  pending: false
+  loss_type: l2
+  normalize: false
+  schedule:
+    observation_fraction: 0.8
+    late_observation_scale: 0.1
+  field_weights:
+    y: 1000.0
+  pde_weight: 0.0
+
+postprocess: {}

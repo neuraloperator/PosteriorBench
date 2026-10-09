@@ -1,0 +1,28 @@
+method: fundiff
+dataset: darcy
+model:
+  channels: [a]
+  resolution: 128
+normalization:
+  channels: [a]
+  mean: [7.504105799560547]
+  std: [4.4999981269340505]
+  scale: 0.5
+sampling:
+  num_steps: 20
+  decode_chunk: 1024
+guidance:
+  pending: false
+  type: conditional_rectified_flow
+  observed_field: u
+  observation_operator: sparse_points
+  condition_representation: sparse_masked_grid
+  num_sensors: 128
+  condition_normalization:
+    channels: [u]
+    mean: [0.005674326580818473]
+    std: [0.003775836434409684]
+    scale: 0.5
+postprocess:
+  discrete_values:
+    a: [3.0, 12.0]

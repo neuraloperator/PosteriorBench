@@ -1,0 +1,32 @@
+method: fundps
+dataset: darcy
+
+model:
+  channels: [a, u]
+  resolution: 128
+
+normalization:
+  channels: [a, u]
+  mean: [7.504105799560547, 0.005674326580818473]
+  std: [4.4999981269340505, 0.003775836434409684]
+  scale: 0.5
+
+sampling:
+  init_latents: rbf
+  rbf_scale: 0.05
+  iterations: 500
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+
+guidance:
+  loss_type: mse
+  normalize: true
+  field_weights:
+    a: 0.0
+    u: 4000.0
+  pde_weight: 0.0
+
+postprocess:
+  discrete_values:
+    a: [3.0, 12.0]

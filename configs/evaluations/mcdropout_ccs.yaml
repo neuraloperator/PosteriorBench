@@ -1,0 +1,22 @@
+method: mcdropout
+dataset: ccs
+model:
+  channels: [x]
+  resolution: [64, 200]
+normalization:
+  channels: [x]
+  mean: [248.86085613126085]
+  std: [212.11948744691105]
+  scale: 1.0
+sampling:
+  dropout_active: true
+guidance:
+  observed_field: y
+  observation_operator: sparse_points
+  condition_channels: [observed_value, mask]
+  condition_normalization:
+    channels: [y]
+    mean: [0.08489088577079608]
+    std: [0.21714609039354066]
+    scale: 1.0
+postprocess: {}

@@ -1,0 +1,25 @@
+method: esmda
+dataset: darcy
+model:
+  channels: [a, u]
+  resolution: 128
+normalization:
+  channels: [a, u]
+  mean: [7.504105799560547, 0.005674326580818473]
+  std: [4.4999981269340505, 0.003775836434409684]
+  scale: 0.5
+sampling:
+  ensemble_size: 128
+  num_assimilations: 2
+  inflation: constant
+guidance:
+  observed_field: u
+  observation_operator: sparse_points
+  observation_error:
+    mode: prior_std_fraction
+    scale: 10.0
+    min_std: 1.0e-6
+    jitter: 1.0e-8
+postprocess:
+  discrete_values:
+    a: [3.0, 12.0]

@@ -1,0 +1,33 @@
+method: funddps
+dataset: darcy
+model:
+  channels: [a]
+  resolution: 128
+normalization:
+  channels: [a]
+  mean: [7.504105799560547]
+  std: [4.4999981269340505]
+  scale: 0.5
+sampling:
+  iterations: 500
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+  init_latents: rbf
+  rbf_scale: 0.05
+guidance:
+  pending: false
+  observed_field: u
+  observation_operator: sparse_points
+  loss_type: mse
+  normalize: true
+  field_weights:
+    u: 1000.0
+  surrogate:
+    model: fno
+    checkpoint: artifacts/checkpoints/funddps_surrogate/darcy_funddps_surrogate.pt
+    input_channels: [a]
+    output_channels: [u]
+postprocess:
+  discrete_values:
+    a: [3.0, 12.0]

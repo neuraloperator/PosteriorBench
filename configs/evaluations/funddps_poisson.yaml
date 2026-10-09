@@ -1,0 +1,31 @@
+method: funddps
+dataset: poisson
+model:
+  channels: [f]
+  resolution: 128
+normalization:
+  channels: [f]
+  mean: [-5.112124255024497e-12]
+  std: [0.2719037491997419]
+  scale: 0.5
+sampling:
+  iterations: 500
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+  init_latents: rbf
+  rbf_scale: 0.05
+guidance:
+  pending: false
+  observed_field: phi
+  observation_operator: sparse_points
+  loss_type: mse
+  normalize: true
+  field_weights:
+    phi: 100.0
+  surrogate:
+    model: fno
+    checkpoint: artifacts/checkpoints/funddps_surrogate/poisson_funddps_surrogate.pt
+    input_channels: [f]
+    output_channels: [phi]
+postprocess: {}
