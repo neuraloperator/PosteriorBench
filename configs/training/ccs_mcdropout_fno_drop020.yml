@@ -1,6 +1,6 @@
 # Direct MC-dropout FNO inverse baseline for CCS.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/CCS_Multimode"
+data: "./data/PDEFieldDataset_hf/CCS"
 target_channels: ["x"]
 observed_channel: "y"
 observation_mode: "fixed_columns"

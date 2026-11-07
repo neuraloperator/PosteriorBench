@@ -1,6 +1,6 @@
 # Direct MC-dropout FNO inverse baseline for Darcy.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 target_channels: ["a"]
 observed_channel: "u"
 observation_mode: "sparse_points"

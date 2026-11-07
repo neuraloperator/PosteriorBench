@@ -1,6 +1,6 @@
 # Direct MC-dropout FNO inverse baseline for Poisson.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Poisson_Multimode"
+data: "./data/PDEFieldDataset_hf/Poisson"
 target_channels: ["f"]
 observed_channel: "phi"
 observation_mode: "sparse_points"

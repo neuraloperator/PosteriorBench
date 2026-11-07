@@ -1,6 +1,6 @@
 # Canonical ECI joint-state FFM prior for Light Transport.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/LTMI_Multimode"
+data: "./data/PDEFieldDataset_hf/LTMI"
 resolution: 64
 normalization_scale: 0.5
 max_steps: 58594

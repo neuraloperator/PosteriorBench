@@ -1,6 +1,6 @@
 stage: "target_fae"
 dataset: "poisson"
-data: "./data/PDEFieldDataset_hf/Poisson_Multimode"
+data: "./data/PDEFieldDataset_hf/Poisson"
 package_dir: "artifacts/checkpoints/fundiff/poisson_fundiff"
 outdir: "exps"
 target_channels: ["f"]

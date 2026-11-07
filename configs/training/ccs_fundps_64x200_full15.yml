@@ -2,7 +2,7 @@
 # Keep nn_resolution=64 so SongUNO uses the square-64 spectral-mode budget
 # (~54.12M params) while the data/input/output stay native 64x200.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/CCS_Multimode"
+data: "./data/PDEFieldDataset_hf/CCS"
 resolution: [64, 200]
 nn_resolution: 64
 cond: false

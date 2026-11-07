@@ -60,10 +60,10 @@ class HFCaseRef:
 
 
 HF_POSTERIOR_DATASET_NAMES = {
-    "ccs": "CCS_Multimode",
-    "darcy": "Darcy_Multimode",
-    "light_transport": "LTMI_Multimode",
-    "poisson": "Poisson_Multimode",
+    "ccs": "CCS",
+    "darcy": "Darcy",
+    "light_transport": "LTMI",
+    "poisson": "Poisson",
 }
 
 HF_FIELD_PREFIX = {

@@ -6,7 +6,7 @@
 
 Official implementation of **PosteriorBench**, a benchmark for evaluating whether generative scientific inverse solvers recover full posterior distributions, beyond accurate single estimates.
 
-PosteriorBench provides four physics-based inverse tasks, high-fidelity reference posteriors, and a common evaluation suite for posterior-generating solvers.
+The dataset covers five physics-based inverse tasks, with reference posteriors and a common evaluation suite for posterior-generating solvers.
 
 ![Figure 1. PosteriorBench overview](assets/posteriorbench_figure1.png)
 
@@ -32,7 +32,7 @@ source ./fundiff_jax_env.sh
 From the repository root, download the [PosteriorBench datasets](https://huggingface.co/datasets/jcy20/PosteriorBench) from Hugging Face:
 
 ```shell
-hf download anonymousmay/PosteriorBench --repo-type dataset --local-dir ./data
+hf download jcy20/PosteriorBench --repo-type dataset --local-dir ./data
 ```
 
 The command saves the training fields and reference posteriors under `./data` with the following layout:
@@ -40,15 +40,15 @@ The command saves the training fields and reference posteriors under `./data` wi
 ```text
 data/
 ├── PDEFieldDataset_hf/     # For training
-│   ├── Poisson_Multimode/
-│   ├── Darcy_Multimode/
-│   ├── LTMI_Multimode/
-│   └── CCS_Multimode/
+│   ├── Poisson/
+│   ├── Darcy/
+│   ├── LTMI/
+│   └── CCS/
 └── PosteriorDataset_hf/    # For evaluation
-    ├── Poisson_Multimode/
-    ├── Darcy_Multimode/
-    ├── LTMI_Multimode/
-    └── CCS_Multimode/
+    ├── Poisson/
+    ├── Darcy/
+    ├── LTMI/
+    └── CCS/
 ```
 
 Checkpoint artifacts are expected under `artifacts/checkpoints/`.

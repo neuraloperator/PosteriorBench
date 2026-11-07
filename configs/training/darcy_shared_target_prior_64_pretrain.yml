@@ -1,7 +1,7 @@
 # Candidate shared Fun-DDPS/DDIS target prior stage 1.
 # Train the 64-resolution SongUNO prior for 10M images.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 target_channels: ["a"]
 normalization_scale: 0.5
 resolution: 64

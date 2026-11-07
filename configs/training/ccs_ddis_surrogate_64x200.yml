@@ -1,6 +1,6 @@
 # CCS DDIS surrogate training: official FNO_pad x -> y.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/CCS_Multimode"
+data: "./data/PDEFieldDataset_hf/CCS"
 input_channels: ["x"]
 output_channels: ["y"]
 normalization_scale: 0.5

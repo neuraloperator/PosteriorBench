@@ -1,6 +1,6 @@
 # Canonical ECI joint-state FFM prior for Poisson.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Poisson_Multimode"
+data: "./data/PDEFieldDataset_hf/Poisson"
 resolution: 128
 normalization_scale: 0.5
 max_steps: 58594

@@ -1,6 +1,6 @@
 stage: "dit"
 dataset: "light_transport"
-data: "./data/PDEFieldDataset_hf/LTMI_Multimode"
+data: "./data/PDEFieldDataset_hf/LTMI"
 package_dir: "artifacts/checkpoints/fundiff/light_transport_fundiff"
 outdir: "exps"
 target_channels: ["sigma_t1", "sigma_t2"]

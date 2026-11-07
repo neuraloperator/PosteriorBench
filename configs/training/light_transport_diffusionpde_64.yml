@@ -1,7 +1,7 @@
 # Canonical DiffusionPDE single-stage prior training for light_transport.
 # One-step smoke passes before launching this 15M-image configuration.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/LTMI_Multimode"
+data: "./data/PDEFieldDataset_hf/LTMI"
 resolution: 64
 normalization_scale: 0.5
 cond: false

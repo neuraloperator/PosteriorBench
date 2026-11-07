@@ -2,7 +2,7 @@
 # The data/noise grid becomes 128; nominal network resolution remains 64 so
 # the mixed-resolution model keeps the stage-1 54M-parameter architecture.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 resolution: 128
 nn_resolution: 64
 cond: false

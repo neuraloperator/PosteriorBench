@@ -1,6 +1,6 @@
 stage: "target_fae"
 dataset: "ccs"
-data: "./data/PDEFieldDataset_hf/CCS_Multimode"
+data: "./data/PDEFieldDataset_hf/CCS"
 package_dir: "artifacts/checkpoints/fundiff/ccs_fundiff"
 outdir: "exps"
 target_channels: ["x"]

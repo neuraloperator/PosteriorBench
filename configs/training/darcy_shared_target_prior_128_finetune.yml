@@ -2,7 +2,7 @@
 # Continue from the 10M stage-1 state to 15M images. The data/noise grid is
 # 128, while the SongUNO network remains at 64 resolution to match FunDPS scale.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 target_channels: ["a"]
 normalization_scale: 0.5
 resolution: 128

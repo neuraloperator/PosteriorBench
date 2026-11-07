@@ -1,6 +1,6 @@
 # Canonical ECI joint-state FFM prior for Darcy.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 resolution: 128
 normalization_scale: 0.5
 max_steps: 58594

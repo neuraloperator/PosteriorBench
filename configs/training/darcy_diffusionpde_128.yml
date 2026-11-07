@@ -1,7 +1,7 @@
 # Canonical DiffusionPDE single-stage prior training for darcy.
 # One-step smoke passes before launching this 15M-image configuration.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 resolution: 128
 normalization_scale: 0.5
 cond: false

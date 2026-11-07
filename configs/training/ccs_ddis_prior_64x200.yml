@@ -2,7 +2,7 @@
 # Shared with Fun-DDPS after promotion. Keep nn_resolution=64 so SongUNO uses
 # the square-64 spectral-mode budget (~54.12M params) while data stays 64x200.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/CCS_Multimode"
+data: "./data/PDEFieldDataset_hf/CCS"
 target_channels: ["x"]
 normalization_scale: 0.5
 resolution: [64, 200]

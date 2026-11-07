@@ -1,6 +1,6 @@
 # Direct MC-dropout FNO inverse baseline for Light Transport.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/LTMI_Multimode"
+data: "./data/PDEFieldDataset_hf/LTMI"
 target_channels: ["sigma_t1", "sigma_t2"]
 observed_channel: "u"
 observation_mode: "area_average"

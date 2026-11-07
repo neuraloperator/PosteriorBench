@@ -1,7 +1,7 @@
 # Canonical Fun-DDPS surrogate training: (sigma_t1, sigma_t2) -> full-field u.
 # Benchmark area averaging is applied later during posterior conditioning.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/LTMI_Multimode"
+data: "./data/PDEFieldDataset_hf/LTMI"
 input_channels: ["sigma_t1", "sigma_t2"]
 output_channels: ["u"]
 normalization_scale: 1.0

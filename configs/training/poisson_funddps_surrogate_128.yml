@@ -1,6 +1,6 @@
 # Canonical Fun-DDPS surrogate training: f -> phi.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Poisson_Multimode"
+data: "./data/PDEFieldDataset_hf/Poisson"
 input_channels: ["f"]
 output_channels: ["phi"]
 normalization_scale: 1.0

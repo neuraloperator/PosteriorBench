@@ -1,7 +1,7 @@
 # Canonical DiffusionPDE single-stage prior training for poisson.
 # One-step smoke passes before launching this 15M-image configuration.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Poisson_Multimode"
+data: "./data/PDEFieldDataset_hf/Poisson"
 resolution: 128
 normalization_scale: 0.5
 cond: false

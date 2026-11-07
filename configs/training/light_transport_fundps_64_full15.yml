@@ -1,7 +1,7 @@
 # Canonical Light Transport FunDPS prior from scratch: 15M images.
 # Use the same final image budget as Darcy/Poisson 10M+5M runs.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/LTMI_Multimode"
+data: "./data/PDEFieldDataset_hf/LTMI"
 resolution: 64
 nn_resolution: null
 cond: false

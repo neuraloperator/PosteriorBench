@@ -9,10 +9,10 @@ import numpy as np
 
 
 HF_TRAINING_DATASET_NAMES = {
-    "ccs": "CCS_Multimode",
-    "darcy": "Darcy_Multimode",
-    "light_transport": "LTMI_Multimode",
-    "poisson": "Poisson_Multimode",
+    "ccs": "CCS",
+    "darcy": "Darcy",
+    "light_transport": "LTMI",
+    "poisson": "Poisson",
 }
 
 HF_TRAINING_DATASET_TO_NAME = {
@@ -213,7 +213,7 @@ def _remote_hf_metadata(source: str) -> dict[str, Any] | None:
 def _default_hf_metadata(dataset_name: str) -> dict[str, Any]:
     defaults = {
         "poisson": {
-            "dataset_name": "Poisson_Multimode",
+            "dataset_name": "Poisson",
             "shape": [128, 128],
             "stats": {
                 "mean": [-5.112124255024497e-12, 6.660705921767042e-06],
@@ -247,7 +247,7 @@ def _default_hf_metadata(dataset_name: str) -> dict[str, Any]:
             },
         },
         "light_transport": {
-            "dataset_name": "LTMI_Multimode",
+            "dataset_name": "LTMI",
             "shape": [64, 64],
             "stats": {
                 "mean": [
@@ -267,7 +267,7 @@ def _default_hf_metadata(dataset_name: str) -> dict[str, Any]:
             },
         },
         "ccs": {
-            "dataset_name": "CCS_Multimode",
+            "dataset_name": "CCS",
             "shape": [64, 200],
             "stats": {
                 "mean": [248.86026000976562, 0.08489078283309937],

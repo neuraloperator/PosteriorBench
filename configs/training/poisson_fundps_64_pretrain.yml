@@ -1,6 +1,6 @@
 # Canonical FunDPS stage 1: 200 epochs over 50k samples (10M images).
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Poisson_Multimode"
+data: "./data/PDEFieldDataset_hf/Poisson"
 resolution: 64
 nn_resolution: null
 cond: false

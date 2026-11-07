@@ -1,6 +1,6 @@
 # Canonical DDIS prior training: target-only Light Transport coefficient prior.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/LTMI_Multimode"
+data: "./data/PDEFieldDataset_hf/LTMI"
 target_channels: ["sigma_t1", "sigma_t2"]
 normalization_scale: 0.5
 resolution: 64

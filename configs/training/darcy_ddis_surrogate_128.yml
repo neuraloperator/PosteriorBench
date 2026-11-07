@@ -1,6 +1,6 @@
 # Canonical DDIS surrogate training: official FNO_pad a -> u.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 input_channels: ["a"]
 output_channels: ["u"]
 normalization_scale: 1.0

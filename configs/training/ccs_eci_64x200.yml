@@ -1,6 +1,6 @@
 # CCS ECI joint-state FFM prior at the native 64x200 grid.
 outdir: "exps"
-data: "./data/PDEFieldDataset_hf/CCS_Multimode"
+data: "./data/PDEFieldDataset_hf/CCS"
 resolution: [64, 200]
 normalization_scale: 0.5
 max_steps: 58594

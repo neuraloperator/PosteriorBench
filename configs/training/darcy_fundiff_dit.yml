@@ -1,6 +1,6 @@
 stage: "dit"
 dataset: "darcy"
-data: "./data/PDEFieldDataset_hf/Darcy_Multimode"
+data: "./data/PDEFieldDataset_hf/Darcy"
 package_dir: "artifacts/checkpoints/fundiff/darcy_fundiff"
 outdir: "exps"
 target_channels: ["a"]
