@@ -261,7 +261,7 @@ class ECIAdapter(MethodAdapter):
             count += current_batch
 
         samples = torch.cat(generated, dim=0)[:num_samples].numpy()
-        return {
+        return self.finalize_samples({
             field: samples[:, self.profile.channels.index(field)]
             for field in case.target_fields
-        }
+        })

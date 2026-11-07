@@ -1,0 +1,23 @@
+method: eci
+dataset: risk_quantification
+model:
+  channels:
+  - risk
+  resolution: 128
+normalization:
+  channels:
+  - risk
+  mean:
+  - 0.6206071256728933
+  std:
+  - 0.44340916526453855
+  scale: 0.5
+sampling:
+  n_step: 400
+  n_mix: 1
+  resample_step: 5
+guidance:
+  constraint: hard_observation
+  observed_field: risk
+  observation_operator: sparse_points
+postprocess: {}

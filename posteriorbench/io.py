@@ -6,6 +6,7 @@ import h5py
 import numpy as np
 
 from posteriorbench.datasets.base import BenchmarkCase
+from posteriorbench.postprocess import postprocess_predictions, prediction_policy
 
 
 SCHEMA_VERSION = "posteriorbench.generated.v1"
@@ -20,6 +21,7 @@ def write_generated_posterior(
     profile: str | Path,
     seed: int,
 ) -> None:
+    samples = postprocess_predictions(case.dataset, samples)
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     sample_counts = {len(values) for values in samples.values()}
@@ -50,6 +52,7 @@ def write_generated_posterior(
                 "checkpoint": str(Path(checkpoint)),
                 "profile": str(Path(profile)),
                 "seed": int(seed),
+                "prediction_policy": prediction_policy(case.dataset),
             }
         )
         if len(case.target_fields) == 1:

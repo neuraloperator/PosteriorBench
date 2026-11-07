@@ -16,6 +16,7 @@ from posteriorbench.evaluation.metrics import (
 )
 from posteriorbench.io import write_json
 from posteriorbench.training_source import open_training_field_source
+from posteriorbench.postprocess import postprocess_predictions, prediction_policy
 
 
 METRIC_NAMES = (
@@ -265,6 +266,7 @@ def main() -> None:
         for field in evaluation_fields:
             field_started = time.perf_counter()
             predicted, pred_weights = _load_prediction(prediction_path, field)
+            predicted = postprocess_predictions(dataset.name, {field: predicted})[field]
             reference_samples = _reference_samples(reference, field)
             swd_field_stats = swd_normalization_stats[field]
             metrics = evaluate_distribution(
@@ -307,6 +309,7 @@ def main() -> None:
         "target_fields": list(evaluation_fields),
         "num_cases": len(per_case),
         "evaluation": {
+            "prediction_policy": prediction_policy(dataset.name),
             "n_projections": args.n_projections,
             "projection_seed": args.projection_seed,
             "projection_distribution": "normalized_dct_grf",

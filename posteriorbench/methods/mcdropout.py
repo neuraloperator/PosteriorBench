@@ -128,6 +128,13 @@ class MCDropoutAdapter(MethodAdapter):
         )
         self.model.load_state_dict(checkpoint["model_state_dict"])
         self.model = self.model.to(self.torch_device)
+        if "inference_dropout" in self.profile.sampling:
+            probability = float(self.profile.sampling["inference_dropout"])
+            if not 0.0 <= probability <= 1.0:
+                raise ValueError("inference_dropout must be between 0 and 1")
+            for module in self.model.modules():
+                if isinstance(module, torch.nn.Dropout):
+                    module.p = probability
         set_mc_dropout_mode(self.model)
 
         discrete_values = self.profile.postprocess.get("discrete_values", {})
@@ -244,10 +251,10 @@ class MCDropoutAdapter(MethodAdapter):
                 count += current_batch
 
         samples = torch.cat(generated, dim=0)[:num_samples].numpy()
-        return {
+        return self.finalize_samples({
             field: samples[:, self.profile.channels.index(field)].astype(
                 np.float32,
                 copy=False,
             )
             for field in case.target_fields
-        }
+        })

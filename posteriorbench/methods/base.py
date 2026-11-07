@@ -5,6 +5,7 @@ import numpy as np
 
 from posteriorbench.artifacts import CheckpointProfile
 from posteriorbench.datasets.base import BenchmarkCase, DatasetAdapter
+from posteriorbench.postprocess import postprocess_predictions
 
 
 class MethodAdapter(ABC):
@@ -25,6 +26,9 @@ class MethodAdapter(ABC):
         self.profile = profile
         self.dataset = dataset
         self.device = device
+
+    def finalize_samples(self, samples: dict[str, np.ndarray]) -> dict[str, np.ndarray]:
+        return postprocess_predictions(self.dataset.name, samples)
 
     @abstractmethod
     def load(self) -> None:

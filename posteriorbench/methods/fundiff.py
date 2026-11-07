@@ -233,7 +233,7 @@ class FunDiffAdapter(MethodAdapter):
             generated += current
 
         samples = np.concatenate(outputs, axis=0)[:num_samples]
-        return {
+        return self.finalize_samples({
             field: samples[:, :, :, index].astype(np.float32)
             for index, field in enumerate(self.profile.channels)
-        }
+        })

@@ -1,0 +1,32 @@
+method: mcdropout
+dataset: risk_quantification
+model:
+  channels:
+  - risk
+  resolution: 128
+normalization:
+  channels:
+  - risk
+  mean:
+  - 0.6206071256728933
+  std:
+  - 0.44340916526453855
+  scale: 0.5
+sampling:
+  dropout_active: true
+  inference_dropout: 0.6
+guidance:
+  observed_field: risk
+  observation_operator: sparse_points
+  condition_channels:
+  - observed_value
+  - mask
+  condition_normalization:
+    channels:
+    - risk
+    mean:
+    - 0.6206071256728933
+    std:
+    - 0.44340916526453855
+    scale: 0.5
+postprocess: {}

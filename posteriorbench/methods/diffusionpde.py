@@ -329,7 +329,7 @@ class DiffusionPDEAdapter(MethodAdapter):
             count += current_batch
 
         samples = torch.cat(generated, dim=0)[:num_samples].numpy()
-        return {
+        return self.finalize_samples({
             channel: samples[:, index]
             for index, channel in enumerate(self.profile.channels)
-        }
+        })

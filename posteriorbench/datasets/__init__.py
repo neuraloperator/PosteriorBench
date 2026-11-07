@@ -3,9 +3,11 @@ from posteriorbench.datasets.ccs import CCSDataset
 from posteriorbench.datasets.darcy import DarcyDataset
 from posteriorbench.datasets.light_transport import LightTransportDataset
 from posteriorbench.datasets.poisson import PoissonDataset
+from posteriorbench.datasets.risk_quantification import RiskQuantificationDataset
 
 
 DATASETS: dict[str, type[DatasetAdapter]] = {
+    "risk_quantification": RiskQuantificationDataset,
     "ccs": CCSDataset,
     "darcy": DarcyDataset,
     "light_transport": LightTransportDataset,

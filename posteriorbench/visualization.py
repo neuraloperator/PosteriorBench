@@ -82,7 +82,8 @@ def write_posterior_samples_figure(
     reference_indices = weighted_sample_indices(reference.weights, 3, rng)
     generated_indices = weighted_sample_indices(generated_weights, 4, rng)
     reference_samples = reference.fields[field]
-    displayed = [case.fields[field]]
+    truth = (reference.truth_fields or case.fields)[field]
+    displayed = [truth]
     displayed.extend(reference_samples[index] for index in reference_indices)
     displayed.extend(generated[index] for index in generated_indices)
     cmap, norm, vmin, vmax = _plot_style(case, field, displayed)
@@ -92,7 +93,7 @@ def write_posterior_samples_figure(
         (
             0,
             0,
-            case.fields[field],
+            truth,
             f"Latent truth {field}_ref",
         )
     ]

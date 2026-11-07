@@ -41,6 +41,7 @@ class BenchmarkCase:
 class ReferencePosterior:
     fields: dict[str, np.ndarray]
     weights: np.ndarray
+    truth_fields: dict[str, np.ndarray] | None = None
 
     @property
     def samples(self) -> np.ndarray:
@@ -60,6 +61,7 @@ class HFCaseRef:
 
 
 HF_POSTERIOR_DATASET_NAMES = {
+    "risk_quantification": "RiskQuantification",
     "ccs": "CCS",
     "darcy": "Darcy",
     "light_transport": "LTMI",
@@ -67,6 +69,7 @@ HF_POSTERIOR_DATASET_NAMES = {
 }
 
 HF_FIELD_PREFIX = {
+    "risk_quantification": "risk_quantification",
     "ccs": "ccs",
     "darcy": "darcy",
     "light_transport": "light_transport",

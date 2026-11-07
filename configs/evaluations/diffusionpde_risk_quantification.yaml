@@ -1,0 +1,28 @@
+method: diffusionpde
+dataset: risk_quantification
+model:
+  channels: [risk]
+  resolution: 128
+normalization:
+  channels: [risk]
+  mean: [0.6206071256728933]
+  std: [0.44340916526453855]
+  scale: 0.5
+sampling:
+  iterations: 2000
+  sigma_min: 0.002
+  sigma_max: 80.0
+  rho: 7.0
+  init_latents: gaussian
+guidance:
+  observed_field: risk
+  observation_operator: sparse_points
+  loss_type: mse
+  normalize: true
+  field_weights:
+    risk: 300
+  pde_weight: 0.0
+  schedule:
+    observation_fraction: 0.8
+    late_observation_scale: 0.1
+postprocess: {}

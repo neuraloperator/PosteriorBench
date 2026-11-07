@@ -293,10 +293,10 @@ class ESMDAAdapter(MethodAdapter):
 
         tensor = torch.from_numpy(updated[:num_samples])
         tensor = self.normalizer.apply_postprocess(tensor).numpy()
-        return {
+        return self.finalize_samples({
             field: tensor[:, self.profile.channels.index(field)].astype(
                 np.float32,
                 copy=False,
             )
             for field in case.target_fields
-        }
+        })

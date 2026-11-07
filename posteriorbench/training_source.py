@@ -13,6 +13,7 @@ HF_TRAINING_DATASET_NAMES = {
     "darcy": "Darcy",
     "light_transport": "LTMI",
     "poisson": "Poisson",
+    "risk_quantification": "RiskQuantification",
 }
 
 HF_TRAINING_DATASET_TO_NAME = {
@@ -24,6 +25,7 @@ HF_TRAINING_CHANNELS = {
     "darcy": ("a", "u"),
     "light_transport": ("sigma_t1", "sigma_t2", "u"),
     "poisson": ("f", "phi"),
+    "risk_quantification": ("risk",),
 }
 
 HF_TRAINING_AVAILABLE_CHANNELS = {
@@ -31,6 +33,7 @@ HF_TRAINING_AVAILABLE_CHANNELS = {
     "darcy": ("a", "u"),
     "light_transport": ("sigma_t1", "sigma_t2", "u", "u2"),
     "poisson": ("f", "phi"),
+    "risk_quantification": ("risk",),
 }
 
 
@@ -164,6 +167,9 @@ def _metadata_from_hf(source: str, dataset: Any) -> dict[str, Any]:
         stats = _stats_dict(("sigma_t1", "sigma_t2", "u", "u2"), metadata["stats"])
     elif dataset_name == "ccs":
         stats = _stats_dict(("x", "y"), metadata["stats"])
+    elif dataset_name == "risk_quantification":
+        # The release stores a=u; they represent one physical risk channel.
+        stats = _stats_dict(("risk",), metadata["stats"])
     else:
         raise AssertionError("validated dataset_name became invalid")
 
@@ -370,6 +376,8 @@ class HFTrainingFieldSource(TrainingFieldSource):
 
     def _all_channels_from_batch(self, batch: dict[str, Any]) -> dict[str, np.ndarray]:
         dataset = self.name
+        if dataset == "risk_quantification":
+            return {"risk": np.asarray(batch["u"], dtype=np.float32)}
         if dataset == "poisson":
             return {
                 "f": np.asarray(batch["a"], dtype=np.float32),

@@ -43,12 +43,14 @@ data/
 │   ├── Poisson/
 │   ├── Darcy/
 │   ├── LTMI/
-│   └── CCS/
+│   ├── CCS/
+│   └── RiskQuantification/
 └── PosteriorDataset_hf/    # For evaluation
     ├── Poisson/
     ├── Darcy/
     ├── LTMI/
-    └── CCS/
+    ├── CCS/
+    └── RiskQuantification/
 ```
 
 Checkpoint artifacts are expected under `artifacts/checkpoints/`.
@@ -91,7 +93,7 @@ python -m posteriorbench.evaluate \
   --max-cases 50
 ```
 
-Use `DATASET` in `{poisson,darcy,light_transport,ccs}` and `METHOD` in `{fundps,diffusionpde,funddps,ddis,fundiff,eci,esmda,mcdropout}`.
+Use `DATASET` in `{poisson,darcy,light_transport,ccs,risk_quantification}` and `METHOD` in `{fundps,diffusionpde,funddps,ddis,fundiff,eci,esmda,mcdropout}`.
 
 Typical checkpoint paths are:
 

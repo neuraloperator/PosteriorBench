@@ -1,0 +1,28 @@
+# Gaussian observation-error approximation used by the SRQ baseline.
+method: esmda
+dataset: risk_quantification
+model:
+  channels:
+  - risk
+  resolution: 128
+normalization:
+  channels:
+  - risk
+  mean:
+  - 0.6206071256728933
+  std:
+  - 0.44340916526453855
+  scale: 0.5
+sampling:
+  ensemble_size: 512
+  num_assimilations: 1
+  inflation: constant
+guidance:
+  observed_field: risk
+  observation_operator: sparse_points
+  observation_error:
+    mode: absolute
+    std: 0.26666666666666666
+    min_std: 1.0e-06
+    jitter: 1.0e-08
+postprocess: {}
