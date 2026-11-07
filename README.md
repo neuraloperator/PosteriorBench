@@ -107,6 +107,10 @@ Typical checkpoint paths are:
 | `eci` | `artifacts/checkpoints/eci/${DATASET}_eci.pt` |
 | `mcdropout` | `artifacts/checkpoints/mcdropout/${DATASET}_mcdropout.pt` |
 
+## Data generation
+
+Generation code and setup instructions are available for [Darcy and Poisson](data_generation/README.md) and [risk quantification](data_generation/risk_quantification/README.md).
+
 ## Results
 
 Table 2 from the paper reports the main PosteriorBench results. Lower is better for all metrics.

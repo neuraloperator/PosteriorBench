@@ -1,4 +1,6 @@
-# Data generation (Darcy / Poisson)
+# Data generation
+
+## Darcy and Poisson
 
 JAX pipeline that builds a large prior sample pool by solving the PDE, then
 rejection-samples posterior ensembles for reference cases from that pool.
@@ -7,16 +9,16 @@ strongly recommended).
 
 ```text
 data_generation/
-  common.py                 GRF prior, CG elliptic solver, pool + rejection loops
-  darcy/   pde.py           -div(a grad u) = 1, a in {3, 12} from a thresholded GRF
+  common.py                 # GRF prior, CG elliptic solver, pool + rejection loops
+  darcy/   pde.py           # -div(a grad u) = 1, a in {3, 12} from a thresholded GRF
            generate_pool.py
            rejection_sampling.py
-  poisson/ pde.py           -lap(phi) = f, f ~ GRF(alpha ~ U(1.5,3), tau ~ U(2,4))
+  poisson/ pde.py           # -lap(phi) = f, f ~ GRF(alpha ~ U(1.5,3), tau ~ U(2,4))
            generate_pool.py
            rejection_sampling.py
 ```
 
-## 1. Prior pool
+### 1. Prior pool
 
 Each job writes `--files_per_job` (default 5) files of `--samples_per_file`
 (default 1M) samples to `<pde>_pool_128/part_<job>_<file>.h5`. `--job_id`
@@ -29,7 +31,7 @@ python -m data_generation.poisson.generate_pool --job_id 0
 
 Datasets: Darcy `a, u`; Poisson `f, phi, alpha, tau`.
 
-## 2. Rejection sampling
+### 2. Rejection sampling
 
 For each reference seed, a pool sample (and its 90/180/270 degree rotations)
 is accepted when the RMSE between its observation and the reference
@@ -57,3 +59,7 @@ Per-PDE defaults kept from the original runs:
 | `--refs_per_job` | 35 | 10 |
 | `--chunk_size` (pool read size) | 5000 | 10000 |
 | skip seed if first pool file has no match | no | yes |
+
+## Stochastic Risk Quantification
+
+Please see [data_generation/risk_quantification/README.md](risk_quantification/README.md) for instructions on generating the risk quantification dataset.

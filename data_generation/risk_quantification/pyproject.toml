@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "posteriorbench-risk-quantification"
+version = "0.1.0"
+description = "Risk probability fields with moving safe sets and weighted reference posteriors"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26,<3", "scipy>=1.11,<2", "numba>=0.61,<0.66", "h5py>=3.10,<4", "datasets>=3,<5", "pyarrow>=16", "matplotlib>=3.8,<4"]
+
+[project.scripts]
+risk-generate = "generate:main"
+risk-visualize = "visualize:main"
+risk-analyze = "analysis:main"
+risk-discover = "discover:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["risk1d", "safe_explorer_core", "exact_screen", "screen_multi", "pipeline", "dataset_io", "pool_generation", "generate", "export_dataset", "visualize", "analysis", "reference_metrics", "discover"]
+
+[tool.setuptools.data-files]
+"share/risk_quantification/configs" = ["configs/full.json"]
+"share/risk_quantification/docs" = ["docs/format.md"]
+
+"share/risk_quantification/docs/assets" = ["docs/assets/reference_posterior.png", "docs/assets/physical_model.png"]
