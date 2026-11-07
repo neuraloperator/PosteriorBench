@@ -80,7 +80,7 @@ def training_loop(
 
     # Load dataset.
     dist.print0("Loading dataset...")
-    dataset_obj = dnnlib.util.construct_class_by_name(**dataset_kwargs)  # subclass of training_fundps.dataset.Dataset
+    dataset_obj = dnnlib.util.construct_class_by_name(**dataset_kwargs)  # subclass of training.fundps.dataset.Dataset
     dataset_sampler = misc.InfiniteSampler(dataset=dataset_obj, rank=dist.get_rank(), num_replicas=dist.get_world_size(), seed=seed)
     dataset_iterator = iter(torch.utils.data.DataLoader(dataset=dataset_obj, sampler=dataset_sampler, batch_size=batch_gpu, **data_loader_kwargs))
     image_shape = list(dataset_obj.image_shape)
@@ -105,12 +105,12 @@ def training_loop(
     # Have to specify `device` here since it is not serialisable
     sampler_kwargs.device = device
     loss_kwargs.sampler = dnnlib.util.construct_class_by_name(**sampler_kwargs)
-    loss_fn = dnnlib.util.construct_class_by_name(**loss_kwargs)  # training_fundps.loss.(VP|VE|EDM)Loss
+    loss_fn = dnnlib.util.construct_class_by_name(**loss_kwargs)  # training.fundps.loss.(VP|VE|EDM)Loss
 
     # Setup optimizer.
     dist.print0("Setting up optimizer...")
     optimizer = dnnlib.util.construct_class_by_name(params=net.parameters(), **optimizer_kwargs)  # subclass of torch.optim.Optimizer
-    augment_pipe = dnnlib.util.construct_class_by_name(**augment_kwargs) if augment_kwargs is not None else None  # training_fundps.augment.AugmentPipe
+    augment_pipe = dnnlib.util.construct_class_by_name(**augment_kwargs) if augment_kwargs is not None else None  # training.fundps.augment.AugmentPipe
     ddp = torch.nn.parallel.DistributedDataParallel(net, device_ids=[device], broadcast_buffers=False)
     ema = copy.deepcopy(net).eval().requires_grad_(False)
 

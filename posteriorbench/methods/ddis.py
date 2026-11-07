@@ -21,7 +21,7 @@ from posteriorbench.spatial import (
     scale_sensor_coords as _scale_coords,
     spatial_to_config,
 )
-from training_fundps.noise_samplers import RBFKernel
+from training.fundps.noise_samplers import RBFKernel
 
 
 def validate_ddis_channels(
@@ -109,10 +109,10 @@ def _create_surrogate_model(
     name = str(model_name).lower()
     if name == "fno_pad":
         try:
-            from training_ddis.surrogate import create_ddis_surrogate_model
+            from training.ddis.surrogate import create_ddis_surrogate_model
         except ImportError as error:
             raise ImportError(
-                "DDIS FNO_pad surrogate loading requires training_ddis.surrogate."
+                "DDIS FNO_pad surrogate loading requires training.ddis.surrogate."
             ) from error
 
         model, _ = create_ddis_surrogate_model(

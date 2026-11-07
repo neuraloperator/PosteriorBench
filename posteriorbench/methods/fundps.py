@@ -3,7 +3,7 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 
-from training_fundps.noise_samplers import RBFKernel
+from training.fundps.noise_samplers import RBFKernel
 from utils.yaml_config import Config
 
 from posteriorbench.datasets.base import BenchmarkCase

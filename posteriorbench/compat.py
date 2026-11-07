@@ -16,16 +16,20 @@ def install_legacy_checkpoint_aliases() -> None:
         "torch_utils.misc": "models.torch_utils.misc",
         "dnnlib": "models.dnnlib",
         "dnnlib.util": "models.dnnlib.util",
-        "training": "training_fundps",
-        "training.augment": "training_fundps.augment",
-        "training.dataset_utils": "training_fundps.dataset_utils",
-        "training.loss": "training_fundps.loss",
-        "training.networks": "training_fundps.networks",
-        "training.noise_samplers": "training_fundps.noise_samplers",
-        "training.training_loop": "training_fundps.training_loop",
+        "training_fundps": "training.fundps",
+        "training_fundps.noise_samplers": "training.fundps.noise_samplers",
+        "training.augment": "training.fundps.augment",
+        "training.dataset_utils": "training.fundps.dataset_utils",
+        "training.loss": "training.fundps.loss",
+        "training.networks": "training.fundps.networks",
+        "training.noise_samplers": "training.fundps.noise_samplers",
+        "training.training_loop": "training.fundps.training_loop",
     }
     for legacy_name, current_name in aliases.items():
-        sys.modules.setdefault(legacy_name, importlib.import_module(current_name))
+        module = sys.modules.setdefault(legacy_name, importlib.import_module(current_name))
+        parent_name, _, child_name = legacy_name.rpartition(".")
+        if parent_name in sys.modules:
+            setattr(sys.modules[parent_name], child_name, module)
 
 
 @contextmanager

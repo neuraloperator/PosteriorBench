@@ -8,8 +8,8 @@ import numpy as np
 from posteriorbench.datasets.base import BenchmarkCase
 from posteriorbench.methods.base import MethodAdapter
 from posteriorbench.spatial import as_spatial_shape, spatial_to_config
-from training_fundiff.checkpoint import load_checkpoint, package_paths, read_json
-from training_fundiff.data import (
+from training.fundiff.checkpoint import load_checkpoint, package_paths, read_json
+from training.fundiff.data import (
     ChannelStats,
     area_condition_from_observation,
     denormalize_fields,
@@ -34,7 +34,7 @@ def _as_tuple(value: Any) -> tuple[Any, ...]:
 
 
 def _encoder_from_config(config: dict[str, Any]):
-    from training_fundiff.models import Encoder
+    from training.fundiff.models import Encoder
 
     kwargs = dict(config)
     kwargs["patch_size"] = _as_tuple(kwargs["patch_size"])
@@ -43,13 +43,13 @@ def _encoder_from_config(config: dict[str, Any]):
 
 
 def _decoder_from_config(config: dict[str, Any]):
-    from training_fundiff.models import Decoder
+    from training.fundiff.models import Decoder
 
     return Decoder(**dict(config))
 
 
 def _dit_from_config(config: dict[str, Any]):
-    from training_fundiff.models import DiT
+    from training.fundiff.models import DiT
 
     return DiT(**dict(config))
 
@@ -165,7 +165,7 @@ class FunDiffAdapter(MethodAdapter):
     def _decode_grid(self, z) -> np.ndarray:
         import jax
         import jax.numpy as jnp
-        from training_fundiff.models import decode_at_coords
+        from training.fundiff.models import decode_at_coords
 
         coords = make_coord_grid(self.spatial_shape)
         chunks = []
@@ -203,7 +203,7 @@ class FunDiffAdapter(MethodAdapter):
     ) -> dict[str, np.ndarray]:
         import jax
         import jax.numpy as jnp
-        from training_fundiff.train import sample_ode
+        from training.fundiff.train import sample_ode
 
         if num_samples <= 0 or batch_size <= 0:
             raise ValueError("num_samples and batch_size must be positive")

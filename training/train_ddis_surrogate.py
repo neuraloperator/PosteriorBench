@@ -11,8 +11,8 @@ import torch
 import wandb
 from torch.utils.data import DataLoader
 
-from training_ddis.dataset import DDISSurrogateDataset
-from training_ddis.surrogate import create_ddis_surrogate_model, relative_l2_loss
+from training.ddis.dataset import DDISSurrogateDataset
+from training.ddis.surrogate import create_ddis_surrogate_model, relative_l2_loss
 from utils.yaml_config import Config, process_arguments
 
 

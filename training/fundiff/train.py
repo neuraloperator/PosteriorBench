@@ -14,19 +14,19 @@ import numpy as np
 import optax
 from flax.training import train_state
 
-from training_fundiff.checkpoint import (
+from training.fundiff.checkpoint import (
     load_checkpoint,
     package_paths,
     save_checkpoint,
     write_json,
 )
-from training_fundiff.data import (
+from training.fundiff.data import (
     ChannelStats,
     FundiffBatches,
     make_coord_grid,
     sample_query_batch,
 )
-from training_fundiff.models import Decoder, DiT, Encoder, decode_at_coords
+from training.fundiff.models import Decoder, DiT, Encoder, decode_at_coords
 from posteriorbench.spatial import as_spatial_shape, spatial_to_config
 
 

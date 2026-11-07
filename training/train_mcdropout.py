@@ -12,8 +12,8 @@ import torch
 import wandb
 from torch.utils.data import DataLoader
 
-from training_mcdropout.dataset import MCDropoutDataset
-from training_mcdropout.model import (
+from training.mcdropout.dataset import MCDropoutDataset
+from training.mcdropout.model import (
     create_mcdropout_model,
     normalized_mse_loss,
     relative_l2_loss,

@@ -10,7 +10,7 @@ from posteriorbench.datasets.base import BenchmarkCase
 from posteriorbench.methods.base import MethodAdapter
 from posteriorbench.normalization import ModelNormalizer
 from posteriorbench.spatial import as_spatial_shape, scale_sensor_coords
-from training_mcdropout.model import create_mcdropout_model, set_mc_dropout_mode
+from training.mcdropout.model import create_mcdropout_model, set_mc_dropout_mode
 
 
 def validate_mcdropout_channels(

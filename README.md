@@ -55,12 +55,13 @@ Checkpoint artifacts are expected under `artifacts/checkpoints/`.
 
 ## Usage
 
-Training configs live under `configs/training/`. Evaluation profiles live under `configs/evaluations/`.
+Training code lives under `training/`, with configs under `configs/training/`.
+Evaluation profiles live under `configs/evaluations/`.
 Training configs and evaluation defaults use the datasets under `./data`.
 
 ```shell
 # Example: train a FunDPS prior on Darcy.
-python train_fundps.py \
+python -m training.train_fundps \
   -c configs/training/darcy_fundps_64_pretrain.yml \
   --name darcy_fundps_pretrain
 

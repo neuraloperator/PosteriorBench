@@ -141,7 +141,7 @@ class ECIAdapter(MethodAdapter):
         if isinstance(checkpoint.get("model"), torch.nn.Module):
             self.flow = checkpoint["model"].to(self.torch_device).eval()
         elif "model_state_dict" in checkpoint:
-            from training_eci.flow import clean_eci_state_dict, create_eci_model
+            from training.eci.flow import clean_eci_state_dict, create_eci_model
 
             config = dict(checkpoint.get("config", {}))
             model_config = dict(config.get("model_config", {}))

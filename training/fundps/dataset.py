@@ -3,7 +3,7 @@ from torch.utils.data import Dataset
 
 from posteriorbench.spatial import as_spatial_shape, spatial_to_config
 from posteriorbench.training_source import open_training_field_source
-from training_fundps.dataset_utils import DatasetNormalizer
+from training.fundps.dataset_utils import DatasetNormalizer
 
 
 class PDEFieldDataset(Dataset):

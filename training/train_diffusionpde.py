@@ -11,7 +11,7 @@ import wandb
 
 from models import dnnlib
 from models.torch_utils import distributed as dist
-from training_fundps import training_loop
+from training.diffusionpde import training_loop
 from utils.yaml_config import Config, process_arguments
 from posteriorbench.spatial import as_spatial_shape, spatial_to_config
 from posteriorbench.training_source import is_training_field_source
@@ -40,7 +40,6 @@ def resolve_resume_paths(state_path):
 def main():
     args = process_arguments()
     conf = Config(args)
-    resume_paths = resolve_resume_paths(conf["resume"]) if conf["resume"] else None
 
     torch.multiprocessing.set_start_method("spawn")
     dist.init()
@@ -50,46 +49,29 @@ def main():
         torch.distributed.broadcast(seed, src=0)
         conf.update("seed", int(seed))
 
-    run_dir = None
     if dist.get_rank() == 0:
-        run_id = (
-            "local"
-            if conf["wandb"] == "disabled"
-            else os.environ.get("WANDB_RUN_ID") or wandb.util.generate_id()
+        wandb.init(
+            project=os.environ.get("WANDB_PROJECT", "PosteriorBench"),
+            config=conf.to_dict(),
+            name=conf["name"],
+            mode=conf["wandb"],
         )
-        formatted_time = datetime.now().strftime("%m%d_%H%M%S")
-        desc = f"{formatted_time}-{conf['name']}-{run_id}"
-        run_dir = os.path.join(conf["outdir"], desc)
-        if os.path.exists(run_dir):
-            raise FileExistsError(f"Output directory already exists: {run_dir}")
-        if conf["wandb"] != "disabled" or not conf["dry_run"]:
-            os.makedirs(run_dir, exist_ok=False)
-        if conf["wandb"] != "disabled":
-            wandb.init(
-                project=os.environ.get("WANDB_PROJECT", "PosteriorBench"),
-                config=conf.to_dict(),
-                dir=run_dir,
-                id=run_id,
-                name=conf["name"],
-                mode=conf["wandb"],
-            )
-            if wandb.run is not None:
-                wandb.run.log_code(root=".")
+        if wandb.run is not None:
+            wandb.run.log_code(root=".")
 
     c = dnnlib.EasyDict()
     if not is_training_field_source(conf["data"]):
         raise ValueError(
-            "Canonical Fun-DDPS prior training requires a materialized Hugging "
+            "Canonical DiffusionPDE training requires a materialized Hugging "
             "Face PDEFieldDataset_hf source"
         )
     c.dataset_kwargs = dnnlib.EasyDict(
-        class_name="training_funddps.dataset.FunDDPSPriorDataset",
+        class_name="training.diffusionpde.dataset.PDEDiffusionDataset",
         path=conf["data"],
         resolution=conf["resolution"],
         use_labels=conf["cond"],
         xflip=conf["xflip"],
         cache=conf["cache"],
-        target_channels=conf.get("target_channels", None),
         normalization_scale=conf.get("normalization_scale", 0.5),
     )
     c.data_loader_kwargs = dnnlib.EasyDict(
@@ -105,15 +87,10 @@ def main():
         betas=[0.9, 0.999],
         eps=1e-8,
     )
-    c.sampler_kwargs = dnnlib.EasyDict(
-        class_name="training_fundps.noise_samplers.RBFKernel",
-        scale=conf["rbf_scale"],
-    )
 
     try:
         dataset_obj = dnnlib.util.construct_class_by_name(**c.dataset_kwargs)
         dataset_name = dataset_obj.name
-        dataset_channels = dataset_obj.channels
         c.dataset_kwargs.resolution = dataset_obj.resolution
         c.dataset_kwargs.max_size = len(dataset_obj)
         dataset_shape = as_spatial_shape(dataset_obj.resolution)
@@ -151,48 +128,43 @@ def main():
             model_channels=192,
             channel_mult=[1, 2, 3, 4],
         )
-    elif conf["arch"] == "ddpmpp-uno":
-        c.network_kwargs.update(
-            model_type="SongUNO",
-            embedding_type="positional",
-            encoder_type="standard",
-            decoder_type="standard",
-            channel_mult_noise=1,
-            resample_filter=[1, 1],
-            model_channels=128,
-            channel_mult=[2, 2, 2],
-            cond=conf["cond"],
-            attn_resolutions=conf["attn_resolutions"],
-            num_blocks=conf["num_blocks"],
-            fmult=conf["fmult"],
-            rank=conf["rank"],
-        )
     else:
-        raise ValueError(f"Invalid Fun-DDPS prior architecture: {conf['arch']}")
+        raise ValueError(f"Invalid DiffusionPDE architecture: {conf['arch']}")
 
     if conf["precond"] == "vp":
-        c.network_kwargs.class_name = "training_fundps.networks.VPPrecond"
-        c.loss_kwargs.class_name = "training_fundps.loss.VPLoss"
+        c.network_kwargs.class_name = "training.diffusionpde.networks.VPPrecond"
+        c.loss_kwargs.class_name = "training.diffusionpde.loss.VPLoss"
     elif conf["precond"] == "ve":
-        c.network_kwargs.class_name = "training_fundps.networks.VEPrecond"
-        c.loss_kwargs.class_name = "training_fundps.loss.VELoss"
+        c.network_kwargs.class_name = "training.diffusionpde.networks.VEPrecond"
+        c.loss_kwargs.class_name = "training.diffusionpde.loss.VELoss"
     elif conf["precond"] == "edm":
-        c.network_kwargs.class_name = "training_fundps.networks.EDMPrecond"
-        c.loss_kwargs.class_name = (
-            "training_fundps.loss.EDMLossWithSampler"
-            if conf["arch"] == "ddpmpp-uno"
-            else "training_fundps.loss.EDMLoss"
-        )
+        c.network_kwargs.class_name = "training.diffusionpde.networks.EDMPrecond"
+        c.loss_kwargs.class_name = "training.diffusionpde.loss.EDMLoss"
     else:
-        raise ValueError(f"Invalid Fun-DDPS prior preconditioning: {conf['precond']}")
+        raise ValueError(f"Invalid DiffusionPDE preconditioning: {conf['precond']}")
 
     if conf["cbase"] is not None:
         c.network_kwargs.model_channels = conf["cbase"]
     if conf["cres"] is not None:
         c.network_kwargs.channel_mult = conf["cres"]
+    if float(conf["augment"]) > 0:
+        c.augment_kwargs = dnnlib.EasyDict(
+            class_name="training.diffusionpde.augment.AugmentPipe",
+            p=conf["augment"],
+        )
+        c.augment_kwargs.update(
+            xflip=1e8,
+            yflip=1,
+            scale=1,
+            rotate_frac=1,
+            aniso=1,
+            translate_frac=1,
+        )
+        c.network_kwargs.augment_dim = 9
     c.network_kwargs.update(dropout=conf["dropout"], use_fp16=conf["fp16"])
-    if conf["nn_resolution"] is not None:
-        nn_shape = as_spatial_shape(conf["nn_resolution"], name="nn_resolution")
+    nn_resolution = conf.get("nn_resolution", None)
+    if nn_resolution is not None:
+        nn_shape = as_spatial_shape(nn_resolution, name="nn_resolution")
         if nn_shape[0] > dataset_shape[0] or nn_shape[1] > dataset_shape[1]:
             raise ValueError(
                 f"nn_resolution={spatial_to_config(nn_shape)} must fit within data resolution {spatial_to_config(dataset_shape)}"
@@ -205,11 +177,7 @@ def main():
     c.lr_rampup_kimg = int(conf["lr_rampup"] * 1000)
     c.ema_halflife_kimg = int(conf["ema"] * 1000)
     c.update(batch_size=conf["batch"], batch_gpu=conf["batch_gpu"])
-    c.update(
-        loss_scaling=conf["ls"],
-        cudnn_benchmark=conf["bench"],
-        allow_tf32=conf.get("tf32", False),
-    )
+    c.update(loss_scaling=conf["ls"], cudnn_benchmark=conf["bench"], allow_tf32=conf.get("tf32", False))
     c.update(
         kimg_per_tick=conf["tick"],
         snapshot_ticks=conf["snap"],
@@ -218,8 +186,8 @@ def main():
     c.cond = conf["cond"]
     c.seed = conf["seed"]
 
-    if resume_paths is not None:
-        state_path, snapshot_path, resume_nimg = resume_paths
+    if conf["resume"]:
+        state_path, snapshot_path, resume_nimg = resolve_resume_paths(conf["resume"])
         c.resume_pkl = snapshot_path
         c.resume_nimg = resume_nimg
         c.resume_state_dump = state_path
@@ -227,16 +195,20 @@ def main():
     if dist.get_rank() != 0:
         c.run_dir = None
     else:
-        c.run_dir = run_dir
+        start_time = wandb.run.start_time if wandb.run is not None else datetime.now().timestamp()
+        formatted_time = datetime.fromtimestamp(start_time).strftime("%m%d_%H%M%S")
+        run_id = wandb.run.id if wandb.run is not None else "local"
+        desc = f"{formatted_time}-{conf['name']}-{run_id}"
+        c.run_dir = os.path.join(conf["outdir"], desc)
+        assert not os.path.exists(c.run_dir)
 
     dist.print0()
-    dist.print0("Fun-DDPS prior training options:")
+    dist.print0("DiffusionPDE training options:")
     dist.print0(json.dumps(c, indent=2))
     dist.print0()
     dist.print0(f"Output directory:        {c.run_dir}")
     dist.print0(f"Dataset name:            {dataset_name}")
     dist.print0(f"Dataset path:            {c.dataset_kwargs.path}")
-    dist.print0(f"Prior channels:          {dataset_channels}")
     dist.print0(f"Class-conditional:       {c.dataset_kwargs.use_labels}")
     dist.print0(f"Network architecture:    {conf['arch']}")
     dist.print0(f"Preconditioning & loss:  {conf['precond']}")
@@ -248,7 +220,7 @@ def main():
 
     if conf["dry_run"]:
         dist.print0("Dry run; exiting.")
-        if dist.get_rank() == 0 and wandb.run is not None:
+        if dist.get_rank() == 0:
             wandb.finish()
         return
 
@@ -260,7 +232,7 @@ def main():
 
     training_loop.training_loop(**c)
 
-    if dist.get_rank() == 0 and wandb.run is not None:
+    if dist.get_rank() == 0:
         wandb.finish()
 
 

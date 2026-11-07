@@ -11,7 +11,7 @@ import wandb
 
 from models import dnnlib
 from models.torch_utils import distributed as dist
-from training_fundps import training_loop
+from training.fundps import training_loop
 from utils.yaml_config import Config, process_arguments
 from posteriorbench.spatial import as_spatial_shape, spatial_to_config
 from posteriorbench.training_source import is_training_field_source
@@ -83,7 +83,7 @@ def main():
             "PDEFieldDataset_hf source"
         )
     c.dataset_kwargs = dnnlib.EasyDict(
-        class_name="training_ddis.dataset.DDISPriorDataset",
+        class_name="training.ddis.dataset.DDISPriorDataset",
         path=conf["data"],
         resolution=conf["resolution"],
         use_labels=conf["cond"],
@@ -106,7 +106,7 @@ def main():
         eps=1.0e-8,
     )
     c.sampler_kwargs = dnnlib.EasyDict(
-        class_name="training_fundps.noise_samplers.RBFKernel",
+        class_name="training.fundps.noise_samplers.RBFKernel",
         scale=conf["rbf_scale"],
     )
 
@@ -144,8 +144,8 @@ def main():
 
     if conf["precond"] != "edm":
         raise ValueError("Canonical DDIS prior training uses precond='edm'")
-    c.network_kwargs.class_name = "training_fundps.networks.EDMPrecond"
-    c.loss_kwargs.class_name = "training_fundps.loss.EDMLossWithSampler"
+    c.network_kwargs.class_name = "training.fundps.networks.EDMPrecond"
+    c.loss_kwargs.class_name = "training.fundps.loss.EDMLossWithSampler"
 
     if conf["cbase"] is not None:
         c.network_kwargs.model_channels = conf["cbase"]

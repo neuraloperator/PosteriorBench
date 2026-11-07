@@ -14,7 +14,7 @@ from posteriorbench.datasets.base import BenchmarkCase
 from posteriorbench.methods.base import MethodAdapter
 from posteriorbench.normalization import ModelNormalizer
 from posteriorbench.spatial import as_spatial_shape, scale_sensor_coords, spatial_to_config
-from training_fundps.noise_samplers import RBFKernel
+from training.fundps.noise_samplers import RBFKernel
 
 
 def validate_funddps_channels(
@@ -168,7 +168,7 @@ def _load_surrogate(path: Path, device: torch.device) -> FunDDPSSurrogate:
     if isinstance(checkpoint.get("model"), torch.nn.Module):
         model = checkpoint["model"]
     elif "model_state_dict" in checkpoint:
-        from training_funddps.surrogate import create_surrogate_model
+        from training.funddps.surrogate import create_surrogate_model
 
         spec = dict(checkpoint.get("model_spec", {}))
         config = dict(checkpoint.get("config", {}))

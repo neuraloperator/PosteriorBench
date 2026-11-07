@@ -11,8 +11,8 @@ import torch
 import wandb
 from torch.utils.data import DataLoader
 
-from training_fundps.dataset import PDEFieldDataset
-from training_eci.flow import clean_eci_state_dict, create_eci_model
+from training.fundps.dataset import PDEFieldDataset
+from training.eci.flow import clean_eci_state_dict, create_eci_model
 from utils.yaml_config import Config, process_arguments
 
 
